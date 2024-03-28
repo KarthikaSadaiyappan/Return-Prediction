@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+
+Resources:
+  
+  ReturnPredictionApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+
+  RetrunPredictionFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: return-prediction/
+      Handler: app.lambda_handler
+      Runtime: python3.9
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /prediction
+            Method: post
+            RestApiId: 
+              Ref: ReturnPredictionApi
